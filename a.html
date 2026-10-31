@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Scroll Animation</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"
+        />
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                line-height: 1.6;
+                margin: 0;
+                padding: 0;
+            }
+            section {
+                padding: 100px 20px;
+                text-align: center;
+                border-bottom: 1px solid #ddd;
+            }
+            .box {
+                width: 100px;
+                height: 100px;
+                margin: 20px auto;
+                background-color: #007bff;
+            }
+        </style>
+    </head>
+    <body>
+        <section data-aos="fade-up">
+            <h1>Hello, World!</h1>
+            <p>This is a scroll-triggered animation example.</p>
+        </section>
+
+        <section data-aos="zoom-in">
+            <div class="box"></div>
+            <p>Zoom-in effect on scroll!</p>
+        </section>
+
+        <!-- Tambahan konten untuk memungkinkan scroll -->
+        <section>
+            <h2>More Content</h2>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                quis ligula ac velit feugiat dictum.
+            </p>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
+                sit amet elit quam.
+            </p>
+        </section>
+
+        <section data-aos="fade-left">
+            <h2>Scroll for More Animations</h2>
+            <p>Try scrolling to see the animations in action.</p>
+        </section>
+
+        <section data-aos="zoom-in">
+            <div class="box"></div>
+            <p>Zoom-in effect on scroll!</p>
+        </section>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+        <script>
+            AOS.init(); // Initialize AOS
+        </script>
+    </body>
+</html>

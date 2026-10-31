@@ -1,0 +1,117 @@
+<style>
+    body {
+        background-image: url('/assets/images/bg.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    .custom-table thead {
+        background-color: #c52121;
+        color: white;
+    }
+
+    .custom-table tbody tr:hover {
+        background-color: #f5f5f5;
+    }
+
+    .custom-table th, .custom-table td {
+        text-align: center;
+        padding: 12px;
+    }
+
+    .custom-table .btn-custom {
+        background-color: #c52121;
+        color: white;
+        border: none;
+    }
+
+    /* Styling tambahan untuk tombol */
+    .btn-custom {
+        background-color: #c52121 !important;
+        border: none;
+        color: white !important;
+    }
+
+    .btn-custom:hover {
+        background-color: #a71a1a;
+    }
+</style>
+
+@extends('dashboard.layouts.main')
+
+@section('container')
+<div class="col-md-10 p-0">
+    <div class="card-body text-end">
+        @if (session()->has('adminSuccess'))
+        <div class="col-md-16 mx-auto alert alert-success text-center alert-dismissible fade show"
+            style="margin-top: 50px; background-color: #c52121; color: white;" role="alert">
+            {{ session('adminSuccess') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
+        @if (session()->has('deleteAdmin'))
+        <div class="col-md-16 mx-auto alert alert-danger text-center alert-dismissible fade show"
+            style="margin-top: 50px; background-color: #c52121; color: white;" role="alert">
+            {{ session('deleteAdmin') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
+
+        @if (auth()->user()->role_id === 1)
+        <a href="/dashboard/users" type="button" class="mb-3 btn btn-custom">
+            Pilih dari Bidang
+        </a>
+        <button type="button" class="mb-3 btn btn-custom" data-bs-toggle="modal" data-bs-target="#addAdmin">
+            Tambah Admin Baru
+        </button>
+        @endif
+
+        <div class="table-responsive">
+            <table class="table custom-table table-hover table-bordered text-center dt-head-center" id="datatable">
+                <thead>
+                    <tr>
+                        <th scope="row">No.</th>
+                        <th scope="row">Username</th>
+                        <th scope="row">Email</th>
+                        <th scope="row">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if ($admins->count() > 0)
+                    @foreach ($admins as $admin)
+                    <tr style="background-color: #ffffff;">
+                        <th scope="row">{{ $loop->iteration }} </th>
+                        <td>{{ $admin->name }} </td>
+                        <td>{{ $admin->email }} </td>
+                        <td style="font-size: 22px;">
+                            <a href="/dashboard/users/{{ $admin->id }}/edit" class="editadmin" id="editadmin"
+                                data-id="{{ $admin->id }}" data-bs-toggle="modal"
+                                data-bs-target="#editadmin" style="color: #c52121;">
+                                <i class="bi bi-pencil-square"></i></a>&nbsp;
+                            <form action="/dashboard/admin/{{ $admin->id }}" method="post" class="d-inline">
+                                @method('delete')
+                                @csrf
+                                <button class="bi bi-trash-fill text-danger border-0"
+                                    style="background-color: transparent;" onclick="return confirm('Hapus data Admin?')"></button>
+                            </form>
+                        </td>
+                    </tr>
+                    @endforeach
+                    @else
+                    <tr>
+                        <td colspan="5" class="text-center">
+                            -- Belum Ada Daftar Admin --
+                        </td>
+                    </tr>
+                    @endif
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@extends('dashboard.partials.addAdminModal')
+@extends('dashboard.partials.editAdminModal')
+{{-- @extends('dashboard.partials.chooseAdminModal') --}}
+@endsection
